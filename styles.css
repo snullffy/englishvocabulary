@@ -1,28 +1,67 @@
 :root {
-  --bg: #f3f1ea;
-  --bg-side: #ebe7dc;
-  --surface: #ffffff;
-  --text: #1d1c18;
-  --text-soft: #5c5850;
-  --line: #d9d3c6;
-  --line-strong: #c8c0b0;
-  --accent: #245544;
-  --accent-hover: #1b4134;
-  --accent-soft: #e6f0eb;
-  --good: #1f6b3c;
-  --good-bg: #e5f4ea;
-  --good-line: #b7dcc4;
-  --bad: #9b2c2c;
-  --bad-bg: #fceaea;
-  --bad-line: #e8b6b6;
-  --warn: #7a5c12;
-  --warn-bg: #f7efd4;
-  --warn-line: #e4d39a;
-  --radius: 8px;
-  --shadow: 0 1px 2px rgba(29, 28, 24, 0.05), 0 8px 24px rgba(29, 28, 24, 0.05);
+  --bg: #F4F1EA;
+  --bg-side: #EBE8DF;
+  --surface: #FFFcf7;
+  --text: #1F2328;
+  --text-soft: #6B717A;
+  --line: #E4DFD4;
+  --line-strong: #D9D4C8;
+  --accent: #2F6F5E;
+  --accent-hover: #245A4C;
+  --accent-soft: rgba(47, 111, 94, 0.12);
+  --on-accent: #ffffff;
+  --good: #2E9E5B;
+  --good-bg: rgba(46, 158, 91, 0.12);
+  --good-line: rgba(46, 158, 91, 0.35);
+  --bad: #CF4B4B;
+  --bad-bg: rgba(207, 75, 75, 0.12);
+  --bad-line: rgba(207, 75, 75, 0.35);
+  --warn: #C67A18;
+  --warn-bg: rgba(198, 122, 24, 0.12);
+  --warn-line: rgba(198, 122, 24, 0.35);
+  --hover: rgba(47, 111, 94, 0.12);
+  --ghost-hover: rgba(31, 35, 40, 0.05);
+  --surface-hover: #F1EEE6;
+  --example: #F1EEE6;
+  --progress: #E4DFD4;
+  --overlay: rgba(31, 35, 40, 0.35);
+  --radius: 12px;
+  --shadow: 0 1px 2px rgba(31, 35, 40, 0.06), 0 8px 24px rgba(31, 35, 40, 0.06);
   --side-w: 252px;
-  --font: "Source Sans 3", "Segoe UI", sans-serif;
-  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --serif: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --bg: #17181C;
+  --bg-side: #1E2025;
+  --surface: #1E2025;
+  --text: #E8E6E0;
+  --text-soft: #9AA0A8;
+  --line: #2C2F36;
+  --line-strong: #363A42;
+  --accent: #6DB39A;
+  --accent-hover: #7FC4AB;
+  --accent-soft: rgba(109, 179, 154, 0.16);
+  --on-accent: #ffffff;
+  --good: #46BC77;
+  --good-bg: rgba(70, 188, 119, 0.16);
+  --good-line: rgba(70, 188, 119, 0.38);
+  --bad: #e08a8a;
+  --bad-bg: #3a2222;
+  --bad-line: #6a3a3a;
+  --warn: #e0c07a;
+  --warn-bg: #3a3220;
+  --warn-line: #6a5830;
+  --hover: rgba(78, 138, 106, 0.16);
+  --ghost-hover: rgba(236, 234, 227, 0.06);
+  --surface-hover: #2a2d27;
+  --example: #2a2d27;
+  --progress: #2c2f28;
+  --overlay: rgba(0, 0, 0, 0.5);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.28), 0 8px 24px rgba(0, 0, 0, 0.32);
+  color-scheme: dark;
 }
 
 *,
@@ -112,19 +151,19 @@ a {
   background: transparent;
   color: var(--text);
   text-align: left;
-  border-radius: 6px;
+  border-radius: 10px;
   padding: 9px 10px;
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .nav-btn:hover {
-  background: rgba(36, 85, 68, 0.08);
+  background: var(--hover);
 }
 
 .nav-btn.active {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .side-foot {
@@ -133,6 +172,33 @@ a {
   color: var(--text-soft);
   font-size: 0.78rem;
   line-height: 1.45;
+}
+
+.theme-toggle {
+  appearance: none;
+  width: 100%;
+  margin-top: 14px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: left;
+  min-height: 44px;
+}
+
+.theme-toggle:hover {
+  background: var(--surface-hover);
+}
+
+.theme-toggle-bar {
+  margin-left: auto;
+  width: auto;
+  min-height: 40px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
 }
 
 .main {
@@ -182,7 +248,7 @@ a {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(29, 28, 24, 0.35);
+  background: var(--overlay);
   z-index: 25;
 }
 
@@ -273,7 +339,7 @@ h2 {
 .progress-cell {
   height: 10px;
   border-radius: 2px;
-  background: #e4dfd3;
+  background: var(--progress);
 }
 
 .progress-cell.on {
@@ -290,22 +356,30 @@ h2 {
 .btn {
   appearance: none;
   border: 1px solid transparent;
-  border-radius: 8px;
-  padding: 10px 16px;
+  border-radius: 10px;
+  padding: 14px 16px;
   font-weight: 600;
+  font-size: 15px;
   background: var(--accent);
-  color: #fff;
-  min-height: 44px;
+  color: var(--on-accent);
+  min-height: 52px;
+  box-shadow: 0 1px 2px rgba(24, 24, 28, 0.05);
   -webkit-tap-highlight-color: transparent;
+  transition: background .15s ease, border-color .15s ease, transform .08s ease;
 }
 
 .btn:hover {
   background: var(--accent-hover);
 }
 
+.btn:active {
+  transform: translateY(1px);
+}
+
 .btn:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+  transform: none;
 }
 
 .btn-secondary {
@@ -315,7 +389,8 @@ h2 {
 }
 
 .btn-secondary:hover {
-  background: #f7f5ef;
+  border-color: rgba(47, 111, 94, 0.28);
+  background: var(--accent-soft);
 }
 
 .btn-ghost {
@@ -325,7 +400,7 @@ h2 {
 }
 
 .btn-ghost:hover {
-  background: rgba(29, 28, 24, 0.05);
+  background: var(--ghost-hover);
 }
 
 .btn-danger {
@@ -439,7 +514,7 @@ mark {
 .example {
   margin: 14px 0 0;
   padding: 12px 14px;
-  background: #f7f5ef;
+  background: var(--example);
   border-radius: 8px;
   color: var(--text);
 }
@@ -476,7 +551,7 @@ mark {
 
 .segment button.active {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .flip-wrap {
@@ -545,16 +620,18 @@ mark {
   text-align: left;
   border: 1px solid var(--line-strong);
   background: var(--surface);
-  border-radius: 8px;
-  padding: 12px 14px;
+  border-radius: 10px;
+  padding: 15px 16px;
   margin-bottom: 8px;
   font-weight: 600;
-  min-height: 48px;
+  min-height: 56px;
+  box-shadow: 0 1px 2px rgba(24, 24, 28, 0.05);
   overflow-wrap: anywhere;
 }
 
 .match-item:hover:not(:disabled) {
   border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .match-item.selected {
@@ -611,14 +688,19 @@ mark {
   text-align: left;
   border: 1px solid var(--line-strong);
   background: var(--surface);
-  border-radius: 8px;
-  padding: 12px 14px;
+  border-radius: 10px;
+  padding: 15px 16px;
   font-weight: 600;
+  font-size: 16px;
+  min-height: 56px;
+  box-shadow: 0 1px 2px rgba(24, 24, 28, 0.05);
   overflow-wrap: anywhere;
+  transition: border-color .15s ease, background .15s ease, transform .08s ease;
 }
 
 .choice:hover:not(:disabled) {
   border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 .choice.correct {

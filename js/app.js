@@ -134,43 +134,39 @@
     );
   }
 
-  function layout(inner) {
-    const nav = NAV_ITEMS.map(function (item) {
-      const active = App.route === item.id ? " active" : "";
-      return (
-        '<button type="button" class="nav-btn' +
-        active +
-        '" data-nav="' +
-        item.id +
-        '">' +
-        escapeHtml(item.label) +
-        "</button>"
-      );
-    }).join("");
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", theme === "dark" ? "#17181C" : "#F4F1EA");
+  }
 
+  function themeButton(extraClass) {
+    const dark = store.getTheme() === "dark";
     return (
-      '<div class="app">' +
-      '<div class="backdrop' +
-      (App.menuOpen ? " show" : "") +
-      '" data-action="close-menu"></div>' +
-      '<aside class="sidebar' +
-      (App.menuOpen ? " open" : "") +
+      '<button type="button" class="theme-toggle' +
+      (extraClass ? " " + extraClass : "") +
+      '" data-action="theme" aria-pressed="' +
+      (dark ? "true" : "false") +
       '">' +
-      '<div class="brand"><div class="brand-title">English Vocabulary</div>' +
-      '<div class="brand-sub">On the Other Side · s. 19</div></div>' +
-      '<nav class="nav">' +
-      nav +
-      "</nav>" +
-      '<div class="side-foot">Viewpoints 1<br>16 glosor · aktiv återkallning</div>' +
-      "</aside>" +
-      '<div class="main">' +
+      (dark ? "Ljust tema" : "Mörkt tema") +
+      "</button>"
+    );
+  }
+
+  function layout(inner) {
+    const chips = NAV_ITEMS.map(function (item) {
+      return '<button type="button" class="chip' + (App.route === item.id ? " active" : "") + '" data-nav="' + item.id + '">' + escapeHtml(item.label) + "</button>";
+    }).join("");
+    return (
       '<header class="topbar">' +
-      '<button class="menu-toggle" data-action="menu" aria-label="Öppna meny"><span></span><span></span><span></span></button>' +
-      '<div class="topbar-title">English Vocabulary</div>' +
+      '<div class="topbar-inner">' +
+      '<button type="button" class="brand" data-nav="home" aria-label="Till startsidan"><span class="brand-mark">EV</span><span class="brand-name">English Vocabulary</span></button>' +
+      '<button type="button" class="mast-link" data-action="theme">' + (store.getTheme() === "dark" ? "Ljust tema" : "Mörkt tema") + "</button>" +
+      '<a class="mast-link lib-link" href="https://isaksplugglibary.vercel.app">Bibliotek</a>' +
+      "</div>" +
+      '<div class="topbar-inner chip-row">' + chips + "</div>" +
       "</header>" +
-      '<main class="content">' +
-      inner +
-      "</main></div></div>"
+      '<main class="content">' + inner + "</main>"
     );
   }
 
@@ -186,6 +182,11 @@
     });
     on(document, "[data-action='close-menu']", "click", function () {
       App.menuOpen = false;
+      render();
+    });
+    on(document, "[data-action='theme']", "click", function () {
+      store.setTheme(store.getTheme() === "dark" ? "light" : "dark");
+      applyTheme(store.getTheme());
       render();
     });
   }
@@ -293,7 +294,13 @@
       WORDS.map(function (word) {
         return "<li><span class=\"sv\">" + escapeHtml(word.sv) + "</span><span class=\"en\">" + escapeHtml(word.en) + "</span></li>";
       }).join("") +
-      "</ul></section>"
+      "</ul></section>" +
+      '<p class="page-kicker" style="margin-top:28px">Övningar</p>' +
+      '<div class="grid-modes">' +
+      NAV_ITEMS.filter(function (item) { return item.id !== "home"; }).map(function (item) {
+        return '<button type="button" class="btn" data-go="' + item.id + '"><span>' + escapeHtml(item.label) + "</span></button>";
+      }).join("") +
+      "</div>"
     );
   }
 
@@ -1617,5 +1624,6 @@
     render();
   }
 
+  applyTheme(store.getTheme());
   start();
 })();
